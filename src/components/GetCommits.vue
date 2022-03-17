@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    {{ this.commits }}
+    <ul id="example-1">
+        <li v-for="commit in this.commits" :key="commit">
+            {{ commit.sha }}
+        </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
-
 
 export default {
   name: 'GetCommits',
@@ -24,11 +26,13 @@ export default {
                 "https://api.github.com/repos/vuejs/vue/commits"
                 );
                 this.commits = response.data;
-                console.log(this.commits);
-            } catch (error) {
-                console.log(error);
-            }
+                } catch (error) {
+                    console.log(error);
+                }
             },
+            parseData() {
+                console.log(commits);
+            }
         },
 
         created() {
