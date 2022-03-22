@@ -2,7 +2,7 @@
   <div id="app">
     <ul id="example-1">
         <li v-for="commit in this.commits" :key="commit">
-            Commit: <router-link to="/details/sha">{{ commit.sha }}</router-link>
+            Commit: <router-link to="/details/sha" @click="setCommit(commit.sha)">{{ commit.sha }}</router-link>
         </li>
     </ul>
   </div>
@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+
 
 export default {
   name: 'GetCommits',
@@ -32,9 +33,11 @@ export default {
             },
             parseData() {
                 console.log(commits);
+            },
+            setCommit(sha) {
+                localStorage.setItem("requestedCommit", sha)
             }
         },
-
         created() {
             this.getData();
         }
