@@ -18,7 +18,7 @@ import axios from 'axios';
 export default {
   name: 'GetCommitsExpanded',
   props: {
-    url: URL
+    sha: String
   },
   data() {
         return { commits: [] }

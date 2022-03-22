@@ -2,7 +2,7 @@
   <div id="app">
     <ul id="example-1">
         <li v-for="commit in this.commits" :key="commit">
-            {{ commit.sha }}
+            Commit: <router-link to="/details/sha">{{ commit.sha }}</router-link>
         </li>
     </ul>
   </div>
