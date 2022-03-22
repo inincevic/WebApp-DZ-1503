@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ul id="example-1">
+    <ul id="example-1" v-if="commit.sha">
         <li> {{ commit.sha }} </li>
         <li> {{ commit.commit.author.name }} </li>
         <li> {{ commit.commit.author.email }} </li>
