@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <ul id="example-1">
-        <li v-for="commit in this.commits" :key="commit">
-            <p>{{ commit.sha }}</p>
-            <p>{{ commit.commit.author.name }}</p>
-            <p>{{ commit.commit.author.email }}</p>
-            <p>{{ commit.commit.message }}</p>
-            <p>{{ commit.commit.author.date }}</p>
-        </li>
+    <ul id="example-1" v-if="commit.sha">
+        <li> {{ commit.sha }} </li>
+        <li> {{ commit.commit.author.name }} </li>
+        <li> {{ commit.commit.author.email }} </li>
+        <li> {{ commit.commit.message }} </li>
+        <li> {{ commit.commit.author.date }} </li>
     </ul>
   </div>
 </template>
@@ -18,18 +16,17 @@ import axios from 'axios';
 export default {
   name: 'GetCommitsExpanded',
   props: {
-    sha: String
   },
   data() {
-        return { commits: [] }
-    },
-        methods: {
+        return { commit: {} }
+  },
+  methods: {
             async getData() {
             try {
                 const response = await axios.get(
                 "https://api.github.com/repos/vuejs/vue/commits"
                 );
-                this.commits = response.data;
+                return response.data;
                 } catch (error) {
                     console.log(error);
                 }
@@ -37,10 +34,18 @@ export default {
             parseData() {
                 console.log(commits);
             }
-        },
-
-        created() {
-            this.getData();
-        }
+  },
+  created() {
+            //this.getData();
+            this.getData().then(
+              (data) => {
+                this.commit = data.find(
+                  (commit) => commit.sha === localStorage.getItem("requestedCommit")
+                );
+                console.log(this.commit)
+              }
+            );
+  
+  }
 }
 </script>
